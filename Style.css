@@ -1,3 +1,7 @@
+* {
+    font-family: "inter";
+}
+
 .logo {
     width: 100px;
     height: 100px;
@@ -11,6 +15,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
 #dropdown {
     display: none;
     position: absolute;
@@ -18,4 +23,34 @@
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+}
+
+#pie-chart {
+    background-color:#f8f8f8;
+    box-shadow: -10px 10px #d9d9d9;
+    border-radius: 69px; 
+    width: 538px;
+    height: 665px;
+}
+
+#budget {
+    background-color: #4688FB;
+    border-radius: 9px;
+    color: white;
+}
+
+#budget > h6 > p {
+    color: rgb(0, 0, 0);
+}
+
+#site {
+    display: flex;
+    justify-content: space-around;
+}
+
+#career {
+    background-color: #0054A8;
+    color: white;
+    font-size: 30px;
+    border: none;
 }

@@ -4,21 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <title>EECU Budget Calculator</title>
 </head>
 <body>
     <a href="https://www.eecu.org/"><img src="EECU.png" alt="EECU Logo" class="logo"></a>
     <button class="career-button" id="dropdown">Choose Your Career</button>
-    <div id="pie chart">
+    
+    <select name="career" id="career">
+       <option for="career">No Career Selected</option> 
+    </select>
 
-    </div>
+<div id="site">
+    <div id="pie-chart">
     <h3>Taxes:</h3>
     <p>Medicare: 1.45%</p>
     <p>Social Security: 6.2%</p>
     <p>State: 4%</p>
-    <p>Federal: _%</p>
+    <p>Federal: __%</p>
     <br>
-    <p>Total Deduction: $______
+    <p>Total Deduction: 
+        <br>
+        $______
     </p>
+    </div>
+
+
+    <div id="budget">
+    <h6>
+        Student Loan:
+        <br>
+        <p>$ |</p> <input id="loan">
+    </h6>
+    <h6>
+        Housing:
+        <br>
+        <p>$ |</p> <input id="housing">
+    </h6>
+    <h6>
+        Essentials:
+        <br>
+        <p>$ |</p> <input id="essentials">
+    </h6>
+    <h6>
+        Lifestyle:
+        <br>
+        <p>$ |</p> <input id="Life">
+    </h6>
+    <h6>
+        Future-Proofing:
+        <br>
+        <p>$ |</p> <input id="future">
+    </h6>
+    <h6>
+        Savings:
+        <br>
+        <p>$ |</p> <input id="savings">
+    </h6>
+    </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
