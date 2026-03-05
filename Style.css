@@ -31,12 +31,16 @@
     border-radius: 69px; 
     width: 538px;
     height: 665px;
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-end;
 }
 
 #budget {
     background-color: #4688FB;
     border-radius: 9px;
     color: white;
+    width: 40%;
 }
 
 #budget > h6 > p {
@@ -53,4 +57,23 @@
     color: white;
     font-size: 30px;
     border: none;
+}
+
+#pie-chart * {
+    margin-left: 40px;
+    padding: 0;
+}
+
+#budget * {
+    margin-left: 40px;
+    padding: 0;
+}
+
+#budget-button {
+    background-color: #0b3d2e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

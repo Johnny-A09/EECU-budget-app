@@ -7,31 +7,44 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script href="script.js" defer></script>
     <title>EECU Budget Calculator</title>
 </head>
 <body>
     <a href="https://www.eecu.org/"><img src="EECU.png" alt="EECU Logo" class="logo"></a>
     <button class="career-button" id="dropdown">Choose Your Career</button>
-    
+<div class="career-container">   
     <select name="career" id="career">
        <option for="career">No Career Selected</option> 
     </select>
 
+    <div id="gross-container">
+    <h2>Gross Income</h2>
+    <h3>Annual:</h3>
+    <h3>Monthly:</h3>
+    </div>
+    <div id="net-container">
+    <h2>Net Income</h2>
+    <h3>Annual:</h3>
+    <h3>Monthly:</h3>
+    </div>
+</div> 
+
 <div id="site">
     <div id="pie-chart">
     <h3>Taxes:</h3>
-    <p>Medicare: 1.45%</p>
-    <p>Social Security: 6.2%</p>
-    <p>State: 4%</p>
-    <p>Federal: __%</p>
+    <p>Medicare: 1.45%</p> <p>$-___________</p>
+    <p>Social Security: 6.2%</p><p>$-___________</p>
+    <p>State: 4%</p><p>$-___________</p>
+    <p>Federal: __%</p><p>$-___________</p>
     <br>
-    <p>Total Deduction: 
+    <p value="deduction">Total Deduction: 
         <br>
         $______
     </p>
     </div>
 
-
+<button id="budget-button">Budget</button>
     <div id="budget">
     <h6>
         Student Loan:
