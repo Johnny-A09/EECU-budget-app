@@ -3,81 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget App</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <script href="script.js" defer></script>
-    <title>EECU Budget Calculator</title>
 </head>
 <body>
-    <a href="https://www.eecu.org/"><img src="EECU.png" alt="EECU Logo" class="logo"></a>
-    <button class="career-button" id="dropdown">Choose Your Career</button>
-<div class="career-container">   
-    <select name="career" id="career">
-       <option for="career">No Career Selected</option> 
+    <img src="images/logo.png" alt="EECU Logo" class="logo">
+    <select id="career">
+        <option value="default">Select a Career</option>
     </select>
+    <div class="income">
+        <h3>Gross Income:</h3>
 
-    <div id="gross-container">
-    <h2>Gross Income</h2>
-    <h3>Annual:</h3>
-    <h3>Monthly:</h3>
-    </div>
-    <div id="net-container">
-    <h2>Net Income</h2>
-    <h3>Annual:</h3>
-    <h3>Monthly:</h3>
-    </div>
-</div> 
+        <p class="yrly">
+                Yearly: 
+                <br>
+                $ <span id="yearly-income">N/A</span>
+        </p>
 
-<div id="site">
-    <div id="pie-chart">
-    <h3>Taxes:</h3>
-    <p>Medicare: 1.45%</p> <p>$-___________</p>
-    <p>Social Security: 6.2%</p><p>$-___________</p>
-    <p>State: 4%</p><p>$-___________</p>
-    <p>Federal: __%</p><p>$-___________</p>
-    <br>
-    <p value="deduction">Total Deduction: 
-        <br>
-        $______
-    </p>
-    </div>
+        <p class="mnthly">
+                Monthly: 
+                <br>
+                $ <span id="monthly-income">N/A</span>
+        </p>
 
-<button id="budget-button">Budget</button>
-    <div id="budget">
-    <h6>
-        Student Loan:
-        <br>
-        <p>$ |</p> <input id="loan">
-    </h6>
-    <h6>
-        Housing:
-        <br>
-        <p>$ |</p> <input id="housing">
-    </h6>
-    <h6>
-        Essentials:
-        <br>
-        <p>$ |</p> <input id="essentials">
-    </h6>
-    <h6>
-        Lifestyle:
-        <br>
-        <p>$ |</p> <input id="Life">
-    </h6>
-    <h6>
-        Future-Proofing:
-        <br>
-        <p>$ |</p> <input id="future">
-    </h6>
-    <h6>
-        Savings:
-        <br>
-        <p>$ |</p> <input id="savings">
-    </h6>
+        <h3>Net Income:</h3>
+
+        <p class="net-yrly">
+                Yearly: 
+                <br>
+                $ <span id="net-yearly-income">N/A</span>
+        </p>
+
+        <p class="net-mnthly">
+                Monthly: 
+                <br>
+                $ <span id="net-monthly-income">N/A</span>
+        </p>
+
     </div>
-</div>
+    
+    <div class="auto-fill">
+
+        <div id="pie">
+
+        </div>
+
+        <button id="month-tax">Monthly</button>
+
+        <div id="taxes">
+
+            <h3>Taxes (Yearly):</h3>
+
+            <p class="taxes">
+                Medicare: 1.45% $ - <span id="medicare-tax">N/A</span>
+                <br>
+                Social Security: 6.2% $ - <span id="social-security-tax">N/A</span>
+                <br>
+                State: 4% $ -<span id="state-tax"></span>
+                <br>
+                Federal: <span id="fed-rate"></span>% $ - <span id="federal-tax">N/A</span>
+                <br>
+                Total Deduction:
+                <br>
+                $ <span id="total-deduction">N/A</span>
+            </p>
+
+        </div>
+        
+    </div>  
+
+    <div class="dual-cards">
+        <div class="button-cont">
+            <button class="tab-btn active" data-tab="budget">Budget</button>
+
+            <button class="tab-btn" data-tab="checkbook">Checkbook</button>
+        </div>
+
+        <div class="budget-card">
+
+            <div class="panel" id="budget">
+
+                <p class="budget-name">Student Loan:</p>
+                <button id="student-info"><img src="info.png" class="info"></button>
+                <p>$ <input type="number" id="pie-"></p>
+
+                <p class="budget-name">Housing:</p>
+                <button id="house-info"><img src="info.png" class="info"></button>
+                <p>$ <input type="number" id="pie-"></p>
+
+                <p class="budget-name">Essentials:</p>
+                <button id="essential-info"><img src="info.png" class="info"></button>
+                <p>$ <input type="number" id="pie-"></p>
+                
+                <p class="budget-name">Lifestyle:</p>
+                <button id="life-info"><img src="info.png" class="info"></button>
+                <p>$ <input type="number" id="pie-"></p>
+                
+                <p class="budget-name">Future-Proofing:</p>
+                <button id="future-info"><img src="info.png" class="info"></button>
+                <p>$ <input type="number" id="pie-"></p>
+                
+                <p class="budget-name">Savings:</p>
+                <button id="saving-info"><img src="info.png" class="info"></button>
+                <p>$ <input type="number" id="pie-"></p>
+
+            </div>
+
+            <div class="panel" id="checkbook" style="display: none;">
+                <div class="check-items">
+                    <input type="text" value="name" placeholder="Name">
+                    <input type="number" value="amount" placeholder="Amount">
+                    <select id="trans-type">
+                        <option value="default">Type</option>
+                        <option value="withdraw">Withdrawl</option>
+                        <option value="deposit">Deposit</option>
+                    </select>
+                    <button id="submit">Submit</button>
+                </div>
+                <table>
+                    <tr>
+                        <th id="t-name">Transaction Name</th>
+                        <th id="t-type">Type</th>
+                        <th id="balance">New Balance</th>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
 <script src="script.js"></script>
 </body>
 </html>

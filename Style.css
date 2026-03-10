@@ -1,79 +1,68 @@
-* {
-    font-family: "inter";
+:root {
+    --dropdown: #0050A6;
+    --panel: #4688FB;
+    --button-active: #146C43;
+    --button-unactive: #0B3D2E;
+    --positive: #0F9900;
+    --negative: #990000;
 }
 
-.logo {
-    width: 100px;
-    height: 100px;
-}
-
-.career-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#dropdown {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-#pie-chart {
-    background-color:#f8f8f8;
-    box-shadow: -10px 10px #d9d9d9;
-    border-radius: 69px; 
-    width: 538px;
-    height: 665px;
-    display: flex;
-    flex-direction:column;
-    justify-content: flex-end;
-}
-
-#budget {
-    background-color: #4688FB;
-    border-radius: 9px;
-    color: white;
-    width: 40%;
-}
-
-#budget > h6 > p {
-    color: rgb(0, 0, 0);
-}
-
-#site {
+.dual-cards {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
 }
 
-#career {
-    background-color: #0054A8;
-    color: white;
-    font-size: 30px;
+.panel {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    background-color: var(--panel);
+    height: 65vh;
+}
+
+.info {
+    height: 100%;
+    width: 100%;
+
+}
+
+
+.panel button{
+    height: 25px;
+    width: 25px;
     border: none;
+    background-color: transparent;
+
 }
 
-#pie-chart * {
-    margin-left: 40px;
-    padding: 0;
-}
-
-#budget * {
-    margin-left: 40px;
-    padding: 0;
-}
-
-#budget-button {
-    background-color: #0b3d2e;
+.tab-btn {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--button-unactive);
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 47px;
+    align-items: center;
+    margin: 0 1%;
+}
+
+.tab-btn.active {
+    background-color: var(--button-active);
+}
+
+.tab-btn:hover:not(.active) {
+    background-color: #148748;
+}
+
+.button-cont {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.auto-fill {
+    height: 65vh;
+
 }
