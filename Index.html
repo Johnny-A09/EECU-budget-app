@@ -4,44 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget App</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
-    <img src="images/logo.png" alt="EECU Logo" class="logo">
-    <select id="career">
-        <option value="default">Select a Career</option>
-    </select>
-    <div class="income">
-        <h3>Gross Income:</h3>
 
-        <p class="yrly">
-                Yearly: 
-                <br>
-                $ <span id="yearly-income">N/A</span>
-        </p>
+    <section class="section">
+        <img src="logo.png" alt="EECU Logo" class="logo">
+        <select id="career">
+            <option value="default">Select a Career</option>
+        </select>
+        <div class="income"> 
+            <div class="gross">
+                <h3>Gross Income:</h3>
+                <p class="yrly">
+                        Yearly: 
+                        <br>
+                        $ <span id="yearly-income">N/A</span>
+                </p>
 
-        <p class="mnthly">
-                Monthly: 
-                <br>
-                $ <span id="monthly-income">N/A</span>
-        </p>
+                <p class="mnthly">
+                        Monthly: 
+                        <br>
+                        $ <span id="monthly-income">N/A</span>
+                </p>
+            </div>
+            <div class="net">    
+                <h3>Net Income:</h3>
 
-        <h3>Net Income:</h3>
+                <p class="net-yrly">
+                        Yearly: 
+                        <br>
+                        $ <span id="net-yearly-income">N/A</span>
+                </p>
 
-        <p class="net-yrly">
-                Yearly: 
-                <br>
-                $ <span id="net-yearly-income">N/A</span>
-        </p>
+                <p class="net-mnthly">
+                        Monthly: 
+                        <br>
+                        $ <span id="net-monthly-income">N/A</span>
+                </p>
+            </div>
+        </div>
+    </section>
 
-        <p class="net-mnthly">
-                Monthly: 
-                <br>
-                $ <span id="net-monthly-income">N/A</span>
-        </p>
-
-    </div>
-    
+<section class="main">
     <div class="auto-fill">
 
         <div id="pie">
@@ -133,6 +138,7 @@
         </div>
 
     </div>
+</section>
 <script src="script.js"></script>
 </body>
 </html>
