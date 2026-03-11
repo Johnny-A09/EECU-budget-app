@@ -5,6 +5,8 @@
     --button-unactive: #0B3D2E;
     --positive: #0F9900;
     --negative: #990000;
+    --pieChartbg: #B9B9B91A;
+    --panel-text: #FFFFFF;
 }
 
 .dual-cards {
@@ -124,5 +126,33 @@
 .auto-fill {
     height: 65vh;
     width: 35%;
+    border-radius: 1.25rem;
+    background-color: var(--pieChartbg);
+    box-shadow: -1.25rem 1.25rem 0.25rem 0rem rgba(0, 0, 0, 0.25);
+}
 
+.budget-card {
+    background-color: var(--panel);
+    border-radius: 0.563rem;
+    width: 40vw;
+}
+
+#budget.panel {
+    border-radius: 0.563rem;
+
+}
+
+.input {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.budget-name {
+    color: var(--panel-text)
+}
+
+#pie- {
+    width: 18vw;
+    height: 2vh;
 }
