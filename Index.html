@@ -14,6 +14,12 @@
             <option value="default">Select a Career</option>
         </select>
         <div class="income"> 
+            <div class="current">
+                <h3>Money Left Over:</h3>
+                <p class="current-money">
+                    $ <span id="current-money">N/A</span>
+                </p>
+            </div>
             <div class="gross">
                 <h3>Gross Income:</h3>
                 <p class="yrly">
@@ -49,30 +55,38 @@
 <section class="main">
     <div class="auto-fill">
 
-        <div id="pie">
-
-        </div>
+        <canvas id="pie">
+        </canvas>
 
         <button id="month-tax">Monthly</button>
 
         <div id="taxes">
 
             <h3>Taxes (Yearly):</h3>
-
-            <p class="taxes">
-                Medicare: 1.45% $ - <span id="medicare-tax">N/A</span>
-                <br>
-                Social Security: 6.2% $ - <span id="social-security-tax">N/A</span>
-                <br>
-                State: 4% $ -<span id="state-tax"></span>
-                <br>
-                Federal: <span id="fed-rate"></span>% $ - <span id="federal-tax">N/A</span>
-                <br>
-                Total Deduction:
-                <br>
-                $ <span id="total-deduction">N/A</span>
-            </p>
-
+            <div class="tax-cont">
+                <p class="taxes">
+                    Medicare: 1.45% 
+                    <br>
+                    Social Security: 6.2% 
+                    <br>
+                    State: 4% 
+                    <br>
+                    Federal: <span id="fed-rate"></span>% 
+                    <br>
+                    Total Deduction:
+                    <br>
+                    $ <span id="total-deduction">N/A</span>
+                </p>
+                <p class="tax-value">
+                    $ - <span id="medicare-tax">N/A</span>
+                    <br>
+                    $ - <span id="social-security-tax">N/A</span>
+                    <br>
+                    $ - <span id="state-tax">N/A</span>
+                    <br>
+                    $ - <span id="federal-tax">N/A</span>
+                </p>
+            </div>
         </div>
         
     </div>  

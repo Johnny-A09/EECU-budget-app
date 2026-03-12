@@ -15,13 +15,23 @@
     flex-direction: column;
 }
 
-.panel {
+#budget {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
-    background-color: var(--panel);
-    height: 65vh;
+    height: 100%;
     width: 50%;
+    padding-left:5%;
+}
+#checkbook{
+    display: flex;
+    flex-flow:column wrap;
+    height: 100%;
+    width: 100%;
+}
+#checkbook:first-child{
+    margin: 5% 0
+    ;
 }
 
 .info {
@@ -65,10 +75,6 @@
     justify-content: flex-start;
 }
 
-
-
-
-
 .logo {
     height: 15vh;
     border-radius: 10px;
@@ -77,7 +83,7 @@
 
 
 #career {
-    width: 20vw;
+    width: 23vw;
     height: 6vh;
     border: none;
     color: white;
@@ -85,7 +91,9 @@
     font-size: 30px;
     text-align: center;
 }
-
+#career:active{
+    border:none;
+}
 /* Net/Gross Income */
 
 .section {
@@ -105,7 +113,7 @@
     justify-self: flex-end;
 }
 
-.net, .gross {
+.net, .gross, .current {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
@@ -113,7 +121,7 @@
     font-size: 25px;
 }
 
-.net h3, .gross h3 {
+.net h3, .gross h3, .current h3 {
     width: 100%;
 }
 
@@ -128,6 +136,7 @@
     width: 35%;
     border-radius: 1.25rem;
     background-color: var(--pieChartbg);
+    margin-top:33.818px;
     box-shadow: -1.25rem 1.25rem 0.25rem 0rem rgba(0, 0, 0, 0.25);
 }
 
@@ -135,12 +144,9 @@
     background-color: var(--panel);
     border-radius: 0.563rem;
     width: 40vw;
+    height:71vh;
 }
 
-#budget.panel {
-    border-radius: 0.563rem;
-
-}
 
 .input {
     display: flex;
@@ -155,4 +161,9 @@
 #pie- {
     width: 18vw;
     height: 2vh;
+}
+.tax-cont{
+    display:flex;
+    justify-content:space-between;
+    width: 40%;
 }

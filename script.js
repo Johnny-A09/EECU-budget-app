@@ -1,6 +1,7 @@
 const tabButtons = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('.panel');
 const dropDown = document.getElementById('career');
+const taxSwitch = document.getElementById('month-tax');
 const yearlyIncome = document.getElementById('yearly-income');
 const monthlyIncome = document.getElementById('monthly-income');
 const netYearlyIncome = document.getElementById('net-yearly-income');
@@ -9,6 +10,7 @@ const medicareTax = document.getElementById('medicare-tax');
 const socialSecurityTax = document.getElementById('social-security-tax');
 const stateTax = document.getElementById('state-tax');
 const federalTax = document.getElementById('federal-tax');
+const fedRate = document.getElementById('fed-rate');
 const totalDeduction = document.getElementById('total-deduction');
 let occupation = '';
 let salary = 0;
@@ -28,7 +30,7 @@ tabButtons.forEach(button => {
 
     // Show the matching panel
     const targetTab = button.getAttribute('data-tab');
-    document.getElementById(targetTab).style.display = 'block';
+    document.getElementById(targetTab).style.display = 'flex';
   });
 });
 
@@ -86,12 +88,15 @@ function loadCareer() {
 
 const federalCalculator = () => {
   if (salary <= 12400) {
+    fedRate.textContent = "10";
     return salary * 0.10;
   }
   else if (salary <= 50400) {
+    fedRate.textContent = "12";
     return 1240 + (salary - 12400) * 0.12;
   }
   else if (salary > 50400) {
+    fedRate.textContent = "22";
     return 5800 + (salary - 50400) * 0.22;
   }
 } //for federal tax related stuff
@@ -101,7 +106,7 @@ function taxes() {
   const socialSecurity = salary * 0.062;
   const medicare = salary * 0.0145;
   const federal = federalCalculator();
-  const totalTaxes = (state + socialSecurity + medicare + federal).toFixed(2);
+  const totalTaxes = (state + socialSecurity + medicare + federal).toFixed(0);
   return totalTaxes;
 }
 
@@ -109,21 +114,31 @@ function displayIncome() {
   const totalTaxes = taxes();
   const federal = federalCalculator(); 
   yearlyIncome.textContent = `${salary}`;
-  monthlyIncome.textContent = `${(salary / 12).toFixed(2)}`;
-  netYearlyIncome.textContent = `${(salary - totalTaxes).toFixed(2)}`;
-  netMonthlyIncome.textContent = `${((salary - totalTaxes) / 12).toFixed(2)}`;
-  medicareTax.textContent = `${(salary * 0.0145).toFixed(2)}`;
-  socialSecurityTax.textContent = `${(salary * 0.062).toFixed(2)}`;
-  stateTax.textContent = `${(salary * 0.04).toFixed(2)}`;
-  federalTax.textContent = `${federal.toFixed(2)}`;
+  monthlyIncome.textContent = `${(salary / 12).toFixed(0)}`;
+  netYearlyIncome.textContent = `${(salary - totalTaxes).toFixed(0)}`;
+  netMonthlyIncome.textContent = `${((salary - totalTaxes) / 12).toFixed(0)}`;
+  medicareTax.textContent = `${(salary * 0.0145).toFixed(0)}`;
+  socialSecurityTax.textContent = `${(salary * 0.062).toFixed(0)}`;
+  stateTax.textContent = `${(salary * 0.04).toFixed(0)}`;
+  federalTax.textContent = `${federal.toFixed(0)}`;
   totalDeduction.textContent = `${totalTaxes}`;
 }
+
+taxSwitch.onclick = function() {
+  taxSwitch.innerHTML = 'Yearly';
+  const state = (salary * 0.04);
+  const socialSecurity = (salary * 0.062);
+  const medicare = (salary * 0.0145);
+  const federal = federalCalculator();
+  const totalTaxes = (state + socialSecurity + medicare + federal).toFixed(0);
+  return totalTaxes / 12;
+};
 
 function initalize() {
   loadCareer();
   getCareers();
   displayIncome();
-  console.log("The code is WORKING.")
+  console.log("The code is WORKING.");
 };
 
 
