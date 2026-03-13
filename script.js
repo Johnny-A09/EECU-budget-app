@@ -12,23 +12,16 @@ const stateTax = document.getElementById('state-tax');
 const federalTax = document.getElementById('federal-tax');
 const fedRate = document.getElementById('fed-rate');
 const totalDeduction = document.getElementById('total-deduction');
+
 let occupation = '';
 let salary = 0;
 
 
 tabButtons.forEach(button => {
   button.addEventListener('click', () => {
-
-    // Remove active class from all buttons
     tabButtons.forEach(btn => btn.classList.remove('active'));
-
-    // Hide all panels
     panels.forEach(panel => panel.style.display = 'none');
-
-    // Activate clicked button
     button.classList.add('active');
-
-    // Show the matching panel
     const targetTab = button.getAttribute('data-tab');
     document.getElementById(targetTab).style.display = 'flex';
   });
@@ -123,16 +116,6 @@ function displayIncome() {
   federalTax.textContent = `${federal.toFixed(0)}`;
   totalDeduction.textContent = `${totalTaxes}`;
 }
-
-taxSwitch.onclick = function() {
-  taxSwitch.innerHTML = 'Yearly';
-  const state = (salary * 0.04);
-  const socialSecurity = (salary * 0.062);
-  const medicare = (salary * 0.0145);
-  const federal = federalCalculator();
-  const totalTaxes = (state + socialSecurity + medicare + federal).toFixed(0);
-  return totalTaxes / 12;
-};
 
 function initalize() {
   loadCareer();

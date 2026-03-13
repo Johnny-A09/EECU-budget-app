@@ -94,6 +94,7 @@
 #career:active{
     border:none;
 }
+
 /* Net/Gross Income */
 
 .section {
@@ -119,6 +120,8 @@
     justify-content: space-around;
     align-items: center;
     font-size: 25px;
+    padding-left:2%;
+    border:black solid 1px;
 }
 
 .net h3, .gross h3, .current h3 {
@@ -158,7 +161,7 @@
     color: var(--panel-text)
 }
 
-#pie- {
+#student, #savings, #future, #lifestyle, #essentials, #housing {
     width: 18vw;
     height: 2vh;
 }
