@@ -12,6 +12,16 @@ const stateTax = document.getElementById('state-tax');
 const federalTax = document.getElementById('federal-tax');
 const fedRate = document.getElementById('fed-rate');
 const totalDeduction = document.getElementById('total-deduction');
+const calculator = document.getElementById('budget');
+const canvas = document.getElementById('pie');
+const students = document.getElementById('student');
+const housings = document.getElementById('housing');
+const essentials1 = document.getElementById('essentials');
+const lifestyles = document.getElementById('lifestyle');
+const futures = document.getElementById('future');
+const savings1 = document.getElementById('savings');
+const inputs = [students, housings, essentials1, lifestyles, futures, savings1];
+let currentChart = null;
 
 let occupation = '';
 let salary = 0;
@@ -117,13 +127,83 @@ function displayIncome() {
   totalDeduction.textContent = `${totalTaxes}`;
 }
 
+//calculating totals, saving to local storage, updating chart
+function calcSaveChart() {
+    const savedExpenses = {};
+    let housing = 0;
+    let life = 0;
+    let essentials = 0;
+    let student = 0;
+    let future = 0;
+    let savings = 0;
+
+    let total = 0;
+    inputs.forEach(input => {
+        total += Number(input.value.replace(/[^0-9]/g, '')) || 0; //adding total
+
+        savedExpenses[input.id] = Number(input.value.replace(/[^0-9]/g, '')) || 0; //adding expense to array to save
+        if (input.classList.contains("housing")) { //checks which category input belongs to & adds only the integers
+            housing += Number(input.value.replace(/[^0-9]/g, '')) || 0;
+        }
+        else if (input.classList.contains("lifestyle")) {
+            life += Number(input.value.replace(/[^0-9]/g, '')) || 0;
+        }
+        else if (input.classList.contains("essentials")) {
+            essentials += Number(input.value.replace(/[^0-9]/g, '')) || 0;
+        }
+        else if (input.classList.contains("student")) {
+            student += Number(input.value.replace(/[^0-9]/g, '')) || 0;
+        }
+        else if (input.classList.contains("future")) {
+            future += Number(input.value.replace(/[^0-9]/g, '')) || 0;
+        }
+        else if (input.classList.contains("savings")) {
+            savings += Number(input.value.replace(/[^0-9]/g, '')) || 0;
+        }
+    });
+
+    localStorage.setItem("savedExpenses", JSON.stringify(savedExpenses)); //saving
+
+    if (currentChart) currentChart.destroy();
+    currentChart = new Chart(canvas, //new chart
+        {
+            type: "doughnut",
+            data: {
+                labels: ["Housing (%)", "Student Loans (%)", "Essentials", "Lifestyle", "Future Planning", "Savings"],
+                datasets: [{ label: "$", data: [housing, student, essentials, life, future, savings] }]
+            },
+            options: {
+                plugins: {
+                    title: { display: true, text: `Expenses by Catagory` }
+                }
+            }
+        }
+    )
+};
+
+function save() {
+    const pullExpenses = JSON.parse(localStorage.getItem("savedExpenses")); //grabbing array
+    inputs.forEach(input => { //updating input fields with previous numbers
+        if (pullExpenses) {
+            if (pullExpenses[input.id]) {
+                input.value = pullExpenses[input.id]
+            }
+        }
+        calcSaveChart(); //update page
+    })
+};
+
+calculator.addEventListener("input", () => { //any input for text box updates totals, storage, and chart
+    calcSaveChart();
+});
+
+
+
 function initalize() {
   loadCareer();
   getCareers();
   displayIncome();
   console.log("The code is WORKING.");
 };
-
-
 //sets up the page on boot. keep at bottom to avoid and order of operations errors
 initalize();

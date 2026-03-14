@@ -121,7 +121,8 @@
     align-items: center;
     font-size: 25px;
     padding-left:2%;
-    border:black solid 1px;
+    text-align:center;
+    margin-right:5%;
 }
 
 .net h3, .gross h3, .current h3 {
@@ -135,6 +136,8 @@
 }
 
 .auto-fill {
+    display:flex;
+    flex-direction:column;
     height: 65vh;
     width: 35%;
     border-radius: 1.25rem;
@@ -151,7 +154,7 @@
 }
 
 
-.input {
+.text-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -169,4 +172,14 @@
     display:flex;
     justify-content:space-between;
     width: 40%;
+}
+#taxes{
+    justify-self:flex-end;
+    margin:5%;
+
+}
+#month-tax{
+    width:8rem;
+    border:none;
+    
 }
