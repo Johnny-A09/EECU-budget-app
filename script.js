@@ -20,12 +20,24 @@ const essentials1 = document.getElementById('essentials');
 const lifestyles = document.getElementById('lifestyle');
 const futures = document.getElementById('future');
 const savings1 = document.getElementById('savings');
+const transName1 = document.getElementById('name');
+const amount = document.getElementById('amount');
+const transType1 = document.getElementById('trans-type');
+const submit = document.getElementById('submit');
+const currentMoney = document.getElementById('current-money');
+const confirmBox = document.getElementById('confirm-cont');
+const yes = document.getElementById('yes');
+const no = document.getElementById('no');
+const table = document.getElementById('table');
 const inputs = [students, housings, essentials1, lifestyles, futures, savings1];
-let currentChart = null;
-
+let cm = 0;
 let occupation = '';
 let salary = 0;
-
+let currentChart = null;
+let prevOccupation = '';
+let prevSalary = 0;
+let careers = [];
+let transactions = [];
 
 tabButtons.forEach(button => {
   button.addEventListener('click', () => {
@@ -43,30 +55,58 @@ function createButtons(careers) {
     const option = document.createElement("option");
     option.value = index;
     option.textContent = career.Occupation;
-    dropDown.addEventListener("change", (event) => {
-      const selectedIndex = event.target.value;
-      occupation = careers[selectedIndex].Occupation;
-      salary = careers[selectedIndex].Salary;
-      displayIncome();
-    }); 
     dropDown.appendChild(option);
   });
+  dropDown.addEventListener("change", (event) => {
+    prevOccupation = occupation;
+    prevSalary = salary;
+    const selectedIndex = event.target.value;
+    occupation = careers[selectedIndex].Occupation;
+    salary = careers[selectedIndex].Salary;
+    if(prevOccupation && transactions.length > 0){
+      confirmBox.style.display = 'flex'; 
+      document.getElementById('overlay').style.display = 'block';
+      yes.onclick = function () {
+        displayIncome();
+        confirmBox.style.display = 'none'; 
+        document.getElementById('overlay').style.display = 'none';
+        transactions = [];
+        while(table.rows.length > 1){table.deleteRow(-1)};
+        saveCareer(); 
+        return; 
+      };
+      no.onclick = function(){
+        occupation = prevOccupation;
+        salary = prevSalary;
+        const prevIndex = careers.findIndex(career => career.Occupation === prevOccupation);
+        dropDown.value = prevIndex;
+        confirmBox.style.display = 'none'; 
+        document.getElementById('overlay').style.display = 'none';
+        displayIncome();
+        return;
+      };
+      return;
+    };
+        displayIncome();
+        saveCareer(); 
+  }); 
 }
 
-  async function getCareers() {
+async function getCareers() {
       const url = "https://eecu-data-server.vercel.app/data";
       try {
           const response = await fetch(url);
-          const jobs = await response.json();
-          createButtons(jobs);
-          return jobs;
+          careers = await response.json();
+          createButtons(careers);
+          loadCareer(careers);
+          return careers;
       }
       catch (error) {
           console.error("Error fetching careers data:", error);
           return [];
       }
       
-  }
+}
 
 function saveCareer() {
   if (occupation && salary) {
@@ -81,7 +121,9 @@ function saveCareer() {
 function loadCareer() {
   const savedCareer = localStorage.getItem('selectedCareer');
   if (savedCareer) {
-    const { occupation, salary } = JSON.parse(savedCareer);
+    ({ occupation, salary } = JSON.parse(savedCareer));
+    const savedIndex = careers.findIndex(career => career.Occupation === occupation);
+    dropDown.value = savedIndex;
     console.log(occupation);
     console.log(salary);
     console.log(`Loaded Career: ${occupation} with Salary: ${salary}`);
@@ -125,6 +167,9 @@ function displayIncome() {
   stateTax.textContent = `${(salary * 0.04).toFixed(0)}`;
   federalTax.textContent = `${federal.toFixed(0)}`;
   totalDeduction.textContent = `${totalTaxes}`;
+  cm = Number(((salary -totalTaxes )/ 12).toFixed(0));
+  currentMoney.textContent = cm;
+  cmCheck();
 }
 
 //calculating totals, saving to local storage, updating chart
@@ -167,7 +212,7 @@ function calcSaveChart() {
     if (currentChart) currentChart.destroy();
     currentChart = new Chart(canvas, //new chart
         {
-            type: "doughnut",
+            type: "pie",
             data: {
                 labels: ["Housing (%)", "Student Loans (%)", "Essentials", "Lifestyle", "Future Planning", "Savings"],
                 datasets: [{ label: "$", data: [housing, student, essentials, life, future, savings] }]
@@ -197,13 +242,87 @@ calculator.addEventListener("input", () => { //any input for text box updates to
     calcSaveChart();
 });
 
+submit.addEventListener("click", function() {
+const transName = transName1.value;
+const transAmount = Number(amount.value);
+const transType = transType1.value;
+  if( transName === '' || transAmount <= 0 || transType === 'default'){
+    document.getElementById('error-cont').style.display = 'flex'; 
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('close').addEventListener('click', function(){
+    document.getElementById('error-cont').style.display = 'none'; 
+    document.getElementById('overlay').style.display = 'none';
+    });
+    return;
+  };
+  if(transType === 'deposit'){cm += transAmount; };
+  if(transType === 'withdraw'){cm -= transAmount; };
+  transactions.push({transName, transAmount, transType, cm});
+  const newTableRow = document.createElement('tr');
+  const newTableD = document.createElement('td');
+  const newTableD1 = document.createElement('td');
+  const newTableD2 = document.createElement('td');
+  const newTableD3 = document.createElement('td');
+  currentMoney.textContent = cm;
+  newTableD.textContent = transName;
+  newTableRow.appendChild(newTableD);
+  newTableD1.textContent = transAmount;
+  newTableRow.appendChild(newTableD1);
+  newTableD2.textContent = transType;
+  newTableRow.appendChild(newTableD2);
+  newTableD3.textContent = cm;
+  newTableRow.appendChild(newTableD3);
+  table.appendChild(newTableRow);
+  tableStuff();
+  localStorage.setItem("transactions", JSON.stringify(transactions));
 
-
-function initalize() {
-  loadCareer();
-  getCareers();
-  displayIncome();
-  console.log("The code is WORKING.");
+  //keep at end
+  cmCheck();
+  revertCheckB();
+});
+function savedArray(){
+  const pullTransactions = JSON.parse(localStorage.getItem("transactions"));
+  if(pullTransactions){
+    transactions = pullTransactions;
+    cm = pullTransactions[pullTransactions.length - 1].cm;
+    transactions.forEach(entry => {
+    const oldTableRow = document.createElement('tr');
+    const oldTableD = document.createElement('td');
+    oldTableD.textContent = entry.transName;
+    oldTableRow.appendChild(oldTableD);
+    const oldTableD1 = document.createElement('td');
+    oldTableD1.textContent = entry.transAmount;
+    oldTableRow.appendChild(oldTableD1);
+    const oldTableD2 = document.createElement('td');
+    oldTableD2.textContent = entry.transType;
+    oldTableRow.appendChild(oldTableD2);
+    const oldTableD3 = document.createElement('td');
+    oldTableD3.textContent = entry.cm;
+    oldTableRow.appendChild(oldTableD3);
+    table.appendChild(oldTableRow);
+  });
+  }
 };
+function revertCheckB(){
+  transName1.value = '';
+  amount.value = '';
+  transType1.value = 'default';
+};
+function cmCheck(){
+  if(cm > 0){
+    currentMoney.style.color = 'var(--positive)';
+  }else if (cm == 0){
+    currentMoney.style.color = 'black';
+  }else {
+    currentMoney.style.color = 'var(--negative)';
+  }
+  localStorage.setItem("currentMoney", cm);
+};
+function initalize() {
+  getCareers();
+  save();
+  savedArray();
+  console.log("The code is WORKING.");
+};  
 //sets up the page on boot. keep at bottom to avoid and order of operations errors
 initalize();

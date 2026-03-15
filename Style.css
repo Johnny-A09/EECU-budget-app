@@ -1,3 +1,10 @@
+*{
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
     --dropdown: #0050A6;
     --panel: #4688FB;
@@ -8,13 +15,64 @@
     --pieChartbg: #B9B9B91A;
     --panel-text: #FFFFFF;
 }
-
+body{
+    display:flex;
+    flex-direction:column;
+    padding:0;
+    margin:0;
+}
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+#confirm-cont, #error-cont{
+    display:flex;
+    flex-flow: row wrap;
+    position: fixed;
+    align-self:center;
+    justify-content:space-around;
+    align-items:center;
+    width:25vw;
+    text-align:center;
+    height:35vh;
+    background-color:rgb(199, 199, 199);
+    color:black;
+    margin-top:30vh;
+    font-size:25px;
+    border-radius: 25px;
+    z-index: 20;
+}
+#confirm-cont button,
+#error-cont button{
+    margin-top:2%;
+    height:3rem;
+    width:6rem;
+    border:none;
+    font-size:20px;
+}
+#yes{
+    background-color:green;
+    color:white;
+    border-radius:5px;
+}
+#no, #close{
+    background-color:red;
+    color:white;
+    border-radius:5px;
+}
+.confirm, .error-text{
+    width:100%;
+}
 .dual-cards {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
 }
-
 #budget {
     display: flex;
     justify-content: space-around;
@@ -156,10 +214,12 @@
 
 .text-container {
     display: flex;
-    justify-content: flex-start;
+    flex-flow: row wrap;
     align-items: center;
 }
-
+.text-container .budget-name{
+    width: 100%;
+}
 .budget-name {
     color: var(--panel-text)
 }
