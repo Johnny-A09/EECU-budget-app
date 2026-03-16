@@ -299,7 +299,8 @@ const transType = transType1.value;
       newTableD1.textContent = "- $" + transAmount;
       newTableD1.style.color = "var(--negative)";
       newTableD1.style.fontWeight = "bold";
-  }
+  };
+  
   newTableRow.appendChild(newTableD1);
   
   newTableD2.textContent = transType.charAt(0).toUpperCase() + transType.slice(1);

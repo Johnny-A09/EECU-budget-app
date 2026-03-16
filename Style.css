@@ -232,7 +232,7 @@ body{
 /* Formatting for Taxes Section inside Left Card */
 .tax-cont{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%; /* Stretches inside padded container */
     font-size: 16px;
 }
@@ -327,6 +327,14 @@ body{
     font-weight: bold;
     width:15%;
     line-height:0px;
+}
+.tax-value{
+    margin:0% 25%;
+}
+.taxes {
+    margin:0;
+    padding:0;
+
 }
 
 /* Media queries */
