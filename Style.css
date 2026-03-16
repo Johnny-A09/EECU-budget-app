@@ -330,7 +330,7 @@ body{
 }
 
 /* Media queries */
-@media (max-width: 768px) {
+@media (max-width: 1641px) {
     .section {
         flex-direction: column;
         height: auto;
