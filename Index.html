@@ -66,15 +66,15 @@
 
 <section class="main">
     <div class="auto-fill">
-
-        <canvas id="pie">
-        </canvas>
+        <div class="chart-container">
+            <canvas id="pie"></canvas>
+        </div>
 
         <button id="month-tax">Monthly</button>
 
         <div id="taxes">
 
-            <h3>Taxes (Yearly):</h3>
+            <h3 id="tax-head">Taxes (Yearly):</h3>
             <div class="tax-cont">
                 <p class="taxes">
                     Medicare: 1.45% 
@@ -163,14 +163,16 @@
                     </select>
                     <button id="submit">Submit</button>
                 </div>
-                <table id="table">
-                    <tr>
-                        <th id="t-name">Transaction Name</th>
-                        <th id="t-amount">Amount</th>
-                        <th id="t-type">Type</th>
-                        <th id="balance">New Balance</th>
-                    </tr>
-                </table>
+                <div class="table-container">
+                    <table id="table">
+                        <tr>
+                            <th id="t-name">Transaction Name</th>
+                            <th id="t-amount">Amount</th>
+                            <th id="t-type">Type</th>
+                            <th id="balance">New Balance</th>
+                        </tr>
+                    </table>
+                </div>
 
             </div>
 

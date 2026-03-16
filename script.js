@@ -38,7 +38,13 @@ let prevOccupation = '';
 let prevSalary = 0;
 let careers = [];
 let transactions = [];
+let isMonthly = false;
 
+taxSwitch.addEventListener ("click", function (){
+  isMonthly = !isMonthly;
+  console.log(isMonthly);
+  displayIncome();
+});
 tabButtons.forEach(button => {
   button.addEventListener('click', () => {
     tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -99,6 +105,7 @@ async function getCareers() {
           careers = await response.json();
           createButtons(careers);
           loadCareer(careers);
+          savedArray(); 
           return careers;
       }
       catch (error) {
@@ -158,15 +165,27 @@ function taxes() {
 function displayIncome() {
   const totalTaxes = taxes();
   const federal = federalCalculator(); 
-  yearlyIncome.textContent = `${salary}`;
-  monthlyIncome.textContent = `${(salary / 12).toFixed(0)}`;
-  netYearlyIncome.textContent = `${(salary - totalTaxes).toFixed(0)}`;
-  netMonthlyIncome.textContent = `${((salary - totalTaxes) / 12).toFixed(0)}`;
-  medicareTax.textContent = `${(salary * 0.0145).toFixed(0)}`;
-  socialSecurityTax.textContent = `${(salary * 0.062).toFixed(0)}`;
-  stateTax.textContent = `${(salary * 0.04).toFixed(0)}`;
-  federalTax.textContent = `${federal.toFixed(0)}`;
-  totalDeduction.textContent = `${totalTaxes}`;
+  if(isMonthly == true){
+    taxSwitch.textContent = 'Yearly';
+    document.getElementById('tax-head').textContent = 'Taxes (Monthly):';
+    medicareTax.textContent = ((salary * 0.0145) / 12).toFixed(0);
+    socialSecurityTax.textContent = ((salary * 0.062) / 12).toFixed(0);
+    stateTax.textContent = ((salary * 0.04) / 12).toFixed(0);
+    federalTax.textContent = (federal / 12).toFixed(0);
+    totalDeduction.textContent = (totalTaxes / 12).toFixed(0);
+  }else{
+    taxSwitch.textContent = 'Monthly';
+    document.getElementById('tax-head').textContent = 'Taxes (Yearly):';
+    yearlyIncome.textContent = salary;
+    monthlyIncome.textContent = (salary / 12).toFixed(0);
+    netYearlyIncome.textContent = (salary - totalTaxes).toFixed(0);
+    netMonthlyIncome.textContent = ((salary - totalTaxes) / 12).toFixed(0);
+    medicareTax.textContent = (salary * 0.0145).toFixed(0);
+    socialSecurityTax.textContent = (salary * 0.062).toFixed(0);
+    stateTax.textContent = (salary * 0.04).toFixed(0);
+    federalTax.textContent = federal.toFixed(0);
+    totalDeduction.textContent = totalTaxes;
+  }
   cm = Number(((salary -totalTaxes )/ 12).toFixed(0));
   currentMoney.textContent = cm;
   cmCheck();
@@ -218,6 +237,7 @@ function calcSaveChart() {
                 datasets: [{ label: "$", data: [housing, student, essentials, life, future, savings] }]
             },
             options: {
+                maintainAspectRatio: false, // Ensures the chart conforms to CSS sizing bounds requested
                 plugins: {
                     title: { display: true, text: `Expenses by Catagory` }
                 }
@@ -258,56 +278,91 @@ const transType = transType1.value;
   if(transType === 'deposit'){cm += transAmount; };
   if(transType === 'withdraw'){cm -= transAmount; };
   transactions.push({transName, transAmount, transType, cm});
+  
   const newTableRow = document.createElement('tr');
   const newTableD = document.createElement('td');
   const newTableD1 = document.createElement('td');
   const newTableD2 = document.createElement('td');
   const newTableD3 = document.createElement('td');
+  
   currentMoney.textContent = cm;
+  
   newTableD.textContent = transName;
   newTableRow.appendChild(newTableD);
-  newTableD1.textContent = transAmount;
+  
+  // Cleaned up formatting to make Checkbook look good
+  if (transType === 'deposit') {
+      newTableD1.textContent = "+ $" + transAmount;
+      newTableD1.style.color = "var(--positive)";
+      newTableD1.style.fontWeight = "bold";
+  } else {
+      newTableD1.textContent = "- $" + transAmount;
+      newTableD1.style.color = "var(--negative)";
+      newTableD1.style.fontWeight = "bold";
+  }
   newTableRow.appendChild(newTableD1);
-  newTableD2.textContent = transType;
+  
+  newTableD2.textContent = transType.charAt(0).toUpperCase() + transType.slice(1);
   newTableRow.appendChild(newTableD2);
-  newTableD3.textContent = cm;
+  
+  newTableD3.textContent = "$" + cm;
   newTableRow.appendChild(newTableD3);
+  
   table.appendChild(newTableRow);
-  tableStuff();
+  
   localStorage.setItem("transactions", JSON.stringify(transactions));
-
+  localStorage.setItem("occupation", occupation);
   //keep at end
   cmCheck();
   revertCheckB();
 });
+
 function savedArray(){
   const pullTransactions = JSON.parse(localStorage.getItem("transactions"));
+  const oldCareer = localStorage.getItem("occupation");
   if(pullTransactions){
-    transactions = pullTransactions;
-    cm = pullTransactions[pullTransactions.length - 1].cm;
-    transactions.forEach(entry => {
-    const oldTableRow = document.createElement('tr');
-    const oldTableD = document.createElement('td');
-    oldTableD.textContent = entry.transName;
-    oldTableRow.appendChild(oldTableD);
-    const oldTableD1 = document.createElement('td');
-    oldTableD1.textContent = entry.transAmount;
-    oldTableRow.appendChild(oldTableD1);
-    const oldTableD2 = document.createElement('td');
-    oldTableD2.textContent = entry.transType;
-    oldTableRow.appendChild(oldTableD2);
-    const oldTableD3 = document.createElement('td');
-    oldTableD3.textContent = entry.cm;
-    oldTableRow.appendChild(oldTableD3);
-    table.appendChild(oldTableRow);
-  });
-  }
+    if(oldCareer == occupation){
+      transactions = pullTransactions;
+      cm = pullTransactions[pullTransactions.length - 1].cm;
+      transactions.forEach(entry => {
+          const oldTableRow = document.createElement('tr');
+          const oldTableD = document.createElement('td');
+          oldTableD.textContent = entry.transName;
+          oldTableRow.appendChild(oldTableD);
+          
+          const oldTableD1 = document.createElement('td');
+          // Match nice styling when re-loading checkbook array
+          if (entry.transType === 'deposit') {
+              oldTableD1.textContent = "+ $" + entry.transAmount;
+              oldTableD1.style.color = "var(--positive)";
+              oldTableD1.style.fontWeight = "bold";
+          } else {
+              oldTableD1.textContent = "- $" + entry.transAmount;
+              oldTableD1.style.color = "var(--negative)";
+              oldTableD1.style.fontWeight = "bold";
+          }
+          oldTableRow.appendChild(oldTableD1);
+          
+          const oldTableD2 = document.createElement('td');
+          oldTableD2.textContent = entry.transType.charAt(0).toUpperCase() + entry.transType.slice(1);
+          oldTableRow.appendChild(oldTableD2);
+          
+          const oldTableD3 = document.createElement('td');
+          oldTableD3.textContent = "$" + entry.cm;
+          oldTableRow.appendChild(oldTableD3);
+          table.appendChild(oldTableRow);
+      });
+      currentMoney.textContent = cm;
+      cmCheck();
+  }};
 };
+
 function revertCheckB(){
   transName1.value = '';
   amount.value = '';
   transType1.value = 'default';
 };
+
 function cmCheck(){
   if(cm > 0){
     currentMoney.style.color = 'var(--positive)';
@@ -318,10 +373,10 @@ function cmCheck(){
   }
   localStorage.setItem("currentMoney", cm);
 };
+
 function initalize() {
   getCareers();
   save();
-  savedArray();
   console.log("The code is WORKING.");
 };  
 //sets up the page on boot. keep at bottom to avoid and order of operations errors
