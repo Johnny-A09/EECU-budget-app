@@ -292,7 +292,7 @@ body{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-#table tr:nth-child(even) {
+#table tr {
     background-color: #f8f9fa; /* Zebra striping */
 }
 
